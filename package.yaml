@@ -1,6 +1,6 @@
 name:                hkorona
 version:             0.1.0.0
-#synopsis:
+synopsis:            Simple program to generate covid19 statistics for Serbia
 #description:
 homepage:            https://github.com/brcha/hkorona#readme
 license:             BSD3
