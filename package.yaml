@@ -1,0 +1,20 @@
+name:                hkorona
+version:             0.1.0.0
+#synopsis:
+#description:
+homepage:            https://github.com/brcha/hkorona#readme
+license:             BSD3
+author:              Filip Brcic
+maintainer:          brcha@yandex.com
+copyright:           Copyright (c) 2020 Filip Brcic
+category:            Web
+extra-source-files:
+- README.md
+
+dependencies:
+  - base >= 4.7 && < 5
+
+executables:
+  hkorona:
+    source-dirs:      src
+    main:             Main.hs

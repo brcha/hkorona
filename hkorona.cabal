@@ -1,0 +1,30 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 3629070d260ccc5ef82c376aacecf370fdbf8f00e489bb710e7766f9b5b9aca9
+
+name:           hkorona
+version:        0.1.0.0
+category:       Web
+homepage:       https://github.com/brcha/hkorona#readme
+author:         Filip Brcic
+maintainer:     brcha@yandex.com
+copyright:      Copyright (c) 2020 Filip Brcic
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+
+executable hkorona
+  main-is: Main.hs
+  other-modules:
+      Paths_hkorona
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+  default-language: Haskell2010
