@@ -1,21 +1,48 @@
-name:                hkorona
-version:             0.1.0.0
-synopsis:            Simple program to generate covid19 statistics for Serbia
+name: hkorona
+version: 0.1.0.0
+synopsis: Simple program to generate covid19 statistics for Serbia
 #description:
-homepage:            https://github.com/brcha/hkorona#readme
-license:             BSD3
-author:              Filip Brcic
-maintainer:          brcha@yandex.com
-copyright:           Copyright (c) 2020 Filip Brcic
-category:            Web
+homepage: https://github.com/brcha/hkorona#readme
+license: BSD3
+author: Filip Brcic
+maintainer: brcha@yandex.com
+copyright: Copyright (c) 2020 Filip Brcic
+category: Web
 extra-source-files:
-- README.md
+  - README.md
 
-dependencies:
-  - base >= 4.7 && < 5
-  - aeson >= 1.4 && < 1.6
+ghc-options: -Wall
+
+library:
+  dependencies:
+    - base >= 4.7 && < 5
+    - aeson >= 1.4 && < 1.6
+  source-dirs: src/lib
 
 executables:
   hkorona:
-    source-dirs:      src
-    main:             Main.hs
+    source-dirs: src/exe
+    main: Main.hs
+    dependencies:
+      - base >= 4.7 && < 5
+      - aeson >= 1.4 && < 1.6
+      - hkorona
+    ghc-options:
+      - -rtsopts
+      - -threaded
+      - -with-rtsopts=-N
+
+tests:
+  hkorona-test:
+    source-dirs: tests
+    main: Main.hs
+    dependencies:
+      - base >= 4.7 && < 5
+      - aeson >= 1.4 && < 1.6
+      - hkorona
+      - tasty
+      - tasty-hspec
+    ghc-options:
+      - -rtsopts
+      - -threaded
+      - -with-rtsopts=-N
