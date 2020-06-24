@@ -24,9 +24,6 @@ data CovidEntryTotals = CovidEntryTotals
     }
     deriving (Generic, Show, Eq)
 
-instance ToJSON CovidEntryTotals where
-  toEncoding = genericToEncoding defaultOptions
-
 instance FromJSON CovidEntryTotals
 
 -- Actual entry in the JSON file
@@ -35,9 +32,6 @@ data CovidEntry = CovidEntry
     , totals :: CovidEntryTotals
     }
     deriving (Generic, Show, Eq)
-
-instance ToJSON CovidEntry where
-  toEncoding = genericToEncoding defaultOptions
 
 instance FromJSON CovidEntry where
   parseJSON (Object v) = do
@@ -56,9 +50,6 @@ data CovidData = CovidData
     , entries :: [CovidEntry]
     }
     deriving (Generic, Show, Eq)
-
-instance ToJSON CovidData where
-  toEncoding = genericToEncoding defaultOptions
 
 instance FromJSON CovidData where
   parseJSON (Object v) = do
