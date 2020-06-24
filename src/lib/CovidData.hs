@@ -50,6 +50,19 @@ instance FromJSON CovidEntry where
     return (CovidEntry {date = fixedDate, totals = totals'})
   parseJSON _ = empty
 
+-- Data for storing the entire file https://raw.githubusercontent.com/urosevic/covid19/master/covid19srbija.json
 data CovidData = CovidData
     { updated :: UTCTime
+    , entries :: [CovidEntry]
     }
+    deriving (Generic, Show, Eq)
+
+instance ToJSON CovidData where
+  toEncoding = genericToEncoding defaultOptions
+
+instance FromJSON CovidData where
+  parseJSON (Object v) = do
+    updated' <- v .: "updated"
+    entries' <- v .: "data"
+    return (CovidData {updated = updated', entries = entries'})
+  parseJSON _ = empty
