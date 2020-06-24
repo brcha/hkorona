@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 4fe3ea0d61b19b0e0d77162bf857e0f8bf4b26efeae58d5fa433206b8947130a
+-- hash: 5e2442a2f200363799ea03a250e9f9b0a2102f3df120515196e3d89808696682
 
 name:           hkorona
 version:        0.1.0.0
@@ -57,7 +57,9 @@ test-suite hkorona-test
   build-depends:
       aeson >=1.4 && <1.6
     , base >=4.7 && <5
+    , generic-arbitrary
     , hkorona
     , tasty
     , tasty-hspec
+    , tasty-quickcheck
   default-language: Haskell2010

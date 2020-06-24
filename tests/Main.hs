@@ -1,16 +1,40 @@
--- Tasty makes it easy to test your code. It is a test framework that can
--- combine many different types of tests into one suite. See its website for
--- help: <http://documentup.com/feuerbach/tasty>.
-import qualified Test.Tasty
+{-# LANGUAGE OverloadedStrings #-}
 
--- Hspec is one of the providers for Tasty. It provides a nice syntax for
--- writing tests. Its website has more info: <https://hspec.github.io>.
+import           Test.QuickCheck.Arbitrary.Generic
+import           Test.Tasty
 import           Test.Tasty.Hspec
+import           Test.Tasty.QuickCheck
+
+import           CovidData
+
+import           Data.Aeson
 
 main :: IO ()
 main = do
-  test <- testSpec "haskeletontest" spec
-  Test.Tasty.defaultMain test
+  ces <- testSpec "CovidEntry" covidEntrySpec
+  defaultMain (testGroup "Tests" [ces])
 
-spec :: Spec
-spec = parallel $ do it "is trivially true" $ do True `shouldBe` True
+-- Enable QuickCheck for CovidEntry
+instance Arbitrary CovidEntry where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+covidEntrySpec :: Spec
+covidEntrySpec =
+  parallel $ do
+    it "id == decode . encode" $
+      property $ \entry ->
+        ((decode $ encode entry) :: Maybe CovidEntry) == Just entry
+    it "Check if decode works as expected with a real example" $
+      let testEntry =
+            "{\"tested\":345251,\"testedO\":345260,\"confirmed\":12990,\"fatal\":262,\"hospitalized\":731,\"ventilator\":19,\"recovered\":11997,\"active\":731,\"caseP\":\"3.76\",\"fatalP\":\"2.02\",\"p0\":108,\"vs\":99,\"f0\":94}"
+          decodedEntry = decode testEntry :: Maybe CovidEntry
+          expectedEntry =
+            CovidEntry
+              { confirmed = 12990
+              , fatal = 262
+              , hospitalized = 731
+              , ventilator = 19
+              , recovered = 11997
+              }
+       in decodedEntry `shouldBe` Just expectedEntry

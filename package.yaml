@@ -42,6 +42,8 @@ tests:
       - hkorona
       - tasty
       - tasty-hspec
+      - tasty-quickcheck
+      - generic-arbitrary
     ghc-options:
       - -rtsopts
       - -threaded

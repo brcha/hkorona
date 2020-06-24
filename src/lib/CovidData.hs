@@ -15,7 +15,7 @@ data CovidEntry = CovidEntry
     , ventilator   :: Int
     , recovered    :: Int
     }
-    deriving (Generic, Show)
+    deriving (Generic, Show, Eq)
 
 instance ToJSON CovidEntry where
   toEncoding = genericToEncoding defaultOptions
