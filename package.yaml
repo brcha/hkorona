@@ -17,6 +17,7 @@ library:
   dependencies:
     - base >= 4.7 && < 5
     - aeson >= 1.4 && < 1.6
+    - time >= 1.8 && < 2
   source-dirs: src/lib
 
 executables:

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5e2442a2f200363799ea03a250e9f9b0a2102f3df120515196e3d89808696682
+-- hash: aefee5c6759b7d8ef96b5c6b70a73c401a7d967112480de37cb58dc4737cce1c
 
 name:           hkorona
 version:        0.1.0.0
@@ -31,6 +31,7 @@ library
   build-depends:
       aeson >=1.4 && <1.6
     , base >=4.7 && <5
+    , time >=1.8 && <2
   default-language: Haskell2010
 
 executable hkorona

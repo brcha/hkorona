@@ -1,14 +1,18 @@
 {-# LANGUAGE DeriveGeneric #-}
 
+-- This module models the JSON data from https://github.com/urosevic/covid19/
 module CovidData
-  ( CovidEntry(..)
+  ( CovidEntryTotals(..)
   ) where
 
 import           GHC.Generics
 
 import           Data.Aeson
 
-data CovidEntry = CovidEntry
+import           Data.Time
+
+-- Totals for a single entry in the covid json file
+data CovidEntryTotals = CovidEntryTotals
     { confirmed    :: Int
     , fatal        :: Int
     , hospitalized :: Int
@@ -17,7 +21,11 @@ data CovidEntry = CovidEntry
     }
     deriving (Generic, Show, Eq)
 
-instance ToJSON CovidEntry where
+instance ToJSON CovidEntryTotals where
   toEncoding = genericToEncoding defaultOptions
 
-instance FromJSON CovidEntry
+instance FromJSON CovidEntryTotals
+
+data CovidData = CovidData
+    { updated :: UTCTime
+    }
