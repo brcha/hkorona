@@ -18,6 +18,8 @@ library:
     - base >= 4.7 && < 5
     - aeson >= 1.4 && < 1.6
     - time >= 1.8 && < 2
+    - bytestring
+    - text
   source-dirs: src/lib
 
 executables:
@@ -41,6 +43,7 @@ tests:
       - base >= 4.7 && < 5
       - aeson >= 1.4 && < 1.6
       - hkorona
+      - time >= 1.8 && < 2
       - tasty
       - tasty-hspec
       - tasty-quickcheck
