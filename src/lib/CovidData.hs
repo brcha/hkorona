@@ -5,6 +5,8 @@
 module CovidData
   ( CovidEntryTotals(..)
   , CovidEntry(..)
+  , CovidData(..)
+  , downloadCovidData
   ) where
 
 import           GHC.Generics
@@ -13,6 +15,8 @@ import           Data.Aeson
 
 import           Control.Applicative
 import           Data.Time
+
+import           Network.HTTP.Conduit (simpleHttp)
 
 -- Totals for a single entry in the covid json file
 data CovidEntryTotals = CovidEntryTotals
@@ -57,3 +61,12 @@ instance FromJSON CovidData where
     entries' <- v .: "data"
     return (CovidData {updated = updated', entries = entries'})
   parseJSON _ = empty
+
+-- URL for json file
+covidSerbiaJsonUrl :: String
+covidSerbiaJsonUrl =
+  "https://raw.githubusercontent.com/urosevic/covid19/master/covid19srbija.json"
+
+-- Download the most recent covid19 data
+downloadCovidData :: IO (Either String CovidData)
+downloadCovidData = eitherDecode <$> simpleHttp covidSerbiaJsonUrl

@@ -13,7 +13,8 @@ main :: IO ()
 main = do
   cets <- testSpec "CovidEntryTotals" covidEntryTotalsSpec
   ces <- testSpec "CovidEntry" covidEntrySpec
-  defaultMain (testGroup "Tests" [cets, ces])
+  cds <- testSpec "CovidData" covidDataSpec
+  defaultMain (testGroup "Tests" [cets, ces, cds])
 
 covidEntryTotalsSpec :: Spec
 covidEntryTotalsSpec =
@@ -51,3 +52,12 @@ covidEntrySpec =
             "{\"date\":\"24/06/2020 15:00\",\"dateTime\":{\"date\":\"24.06.2020\",\"time\":\"15:00\"},\"totals\":{\"tested\":359060,\"testedO\":359069,\"confirmed\":13235,\"fatal\":263,\"hospitalized\":861,\"ventilator\":21,\"recovered\":12111,\"active\":861,\"caseP\":\"3.69\",\"fatalP\":\"1.99\",\"p0\":110,\"vs\":101,\"f0\":96},\"details\":{\"positive\":143,\"hospital\":143,\"personal\":0,\"negative\":7641,\"totalTested\":7784,\"fatalM\":0,\"fatalF\":0,\"fatal\":0,\"recovered\":57,\"caseP\":\"1.84\"},\"info\":{\"refs\":[\"https://www.zdravlje.gov.rs/vest/348407/informacija-o-novom-korona-virusu-na-dan-24-jun-2020-godine-u-15-casova.php\"],\"note\":\"\"}}"
           decodedEntry = decode testEntry :: Maybe CovidEntry
        in decodedEntry `shouldBe` Just entryData
+
+covidDataSpec :: Spec
+covidDataSpec =
+  before downloadCovidData $ -- download the data only once
+  parallel $ do
+    it "Check if data is downloaded and parsed correctly" $ \cd -> do
+      cd `shouldSatisfy` (not . null)
+    it "Check if entries are not null" $ \cd -> do
+      (mapM entries cd) `shouldSatisfy` (not . null)
